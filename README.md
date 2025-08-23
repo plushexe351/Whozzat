@@ -4,20 +4,19 @@ An app for all your links in one place, with a material you inspired design buil
 
 ## 📋 Feature TODO List 
 
-| Feature                         | Status          | Notes                                      |
-|---------------------------------|------------------|--------------------------------------------|
-| - [ ] Landing Page                 | WIP        |                    |
-| - [x] Authentication               | Complete  | Basic login/register done, improvements pending |
-| - [ ] Profile Customization Page    | To Do            | Add bio, profile pic, background, etc.     |
-| - [x] Add / Remove Links UI         | To Do            | User can manage their personal links       |
-| - [ ] Link Analytics Dashboard      | To Do            | Clicks, impressions, device info, etc.     |
-| - [ ] Public Profile Page           | To Do            | Live profile with custom URL               |
-| - [ ] Themes / Appearance Options   | To Do            | Colors, fonts, button shapes               |
-| - [x] Social Login (Google)        | To Do            | OAuth integration                          |
-| - [ ] Admin Dashboard               | To Do            | User management, reported content review   |
-| - [ ] Responsive Design Pass        | To Do            | Ensure mobile and tablet compatibility     |
-| - [ ] SEO & Open Graph Meta Tags    | To Do            | For sharing profile links on social media  |
-| - [ ] Deployment                    | To Do            | Host on Vercel, Netlify, or custom server  |
+- [ ] Landing Page — WIP
+- [x] Authentication — Complete (basic login/register done, improvements pending)
+- [x] Social Login (Google) 
+- [ ] Profile Customization Page — To Do (add bio, profile pic, background, etc.)
+- [x] Add / Remove Links UI — To Do (user can manage their personal links)
+- [ ] Link Analytics Dashboard — To Do (clicks, impressions, device info, etc.)
+- [ ] Public Profile Page — To Do (live profile with custom URL)
+- [ ] Themes / Appearance Options — To Do (colors, fonts, button shapes)
+- [ ] Admin Dashboard — To Do (user management, reported content review)
+- [ ] Responsive Design Pass — To Do (ensure mobile + tablet compatibility)
+- [ ] SEO & Open Graph Meta Tags — To Do (for sharing profile links on social media)
+- [ ] Deployment — To Do
+
 
 
 ## 🌐 Live Preview
