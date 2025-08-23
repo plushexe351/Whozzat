@@ -1,15 +1,6 @@
 @use ".../../../../../../mixins.scss" as *;
 
 .Dashboard {
-  padding: 2rem;
-
-  @include mediumDevice {
-    padding: 1.5rem;
-  }
-  @include smallDevice {
-    padding: 1rem;
-  }
-
   .header-container {
     padding: 1.5rem;
     padding-bottom: 0;

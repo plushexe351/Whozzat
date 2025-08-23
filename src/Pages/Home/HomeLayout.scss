@@ -7,9 +7,25 @@
   background-color: var(--fg-dark);
   .main {
     flex: 1;
-
     height: 100vh;
     overflow: auto;
+    padding: 2rem;
+
+    @include mediumDevice {
+      padding: 1.5rem;
+    }
+    @include smallDevice {
+      padding: 1rem;
+    }
+
+    .dummy-wrapper {
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 4rem);
+      width: 100%;
+    }
   }
   .close-btn {
     position: absolute;
