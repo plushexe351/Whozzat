@@ -1,0 +1,24 @@
+@use "../../mixins.scss" as *;
+
+.Home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--fg-dark);
+  .main {
+    flex: 1;
+
+    height: 100vh;
+    overflow: auto;
+  }
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #888;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,54 @@
+import { AuthProvider } from "./Context/AuthContext";
+import { DataProvider } from "./Context/DataContext";
+import { useState, useEffect } from "react";
+import "./Globals.css";
+import { Routes, Route, useLocation, Navigate } from "react-router";
+import Home from "./Pages/Home/HomeLayout";
+import Auth from "./Pages/Auth/Auth";
+import Profile from "./Pages/Home/HomeOutlets/Profile/Profile";
+import Analytics from "./Pages/Home/HomeOutlets/Analytics/Analytics";
+import Landing from "./Pages/Landing/Landing";
+import PrivateRoute from "./Components/PrivateRoute";
+import { ToastProvider } from "./Context/ToastContext";
+import LenisWrapper from "./LenisWrapper";
+import { UIProvider } from "./Context/UIContext";
+import Dashboard from "./Pages/Home/HomeOutlets/Dashboard/Dashboard";
+import Settings from "./Pages/Home/HomeOutlets/Settings/Settings";
+
+function App() {
+  return (
+    // <LenisWrapper>
+    <AuthProvider>
+      <UIProvider>
+        <ToastProvider>
+          <DataProvider>
+            <div className="App">
+              <Routes>
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/landing" element={<Landing />} />
+                <Route path="/" element={<Navigate to="/landing" replace />} />
+                <Route
+                  path="/home"
+                  element={
+                    <PrivateRoute>
+                      <Home />
+                    </PrivateRoute>
+                  }
+                >
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="analytics" element={<Analytics />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="settings" element={<Settings />} />
+                </Route>
+              </Routes>
+            </div>
+          </DataProvider>
+        </ToastProvider>
+      </UIProvider>
+    </AuthProvider>
+    // </LenisWrapper>
+  );
+}
+
+export default App;

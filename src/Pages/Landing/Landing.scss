@@ -1,0 +1,285 @@
+@use "../../mixins.scss" as *;
+
+section {
+  margin-bottom: 0;
+  min-height: calc(100vh - 122px);
+}
+
+.hero.main {
+  padding: 0;
+  justify-content: start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .greet {
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--fg-dark);
+    color: var(--text-primary);
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border-radius: 3rem;
+
+    .close-greet {
+      border: 1px solid var(--color-primary);
+      padding: 0.6rem 1rem;
+      border-radius: 3rem;
+      transition: 0.2s ease;
+      cursor: pointer;
+      &:hover {
+        border-radius: 1rem;
+      }
+    }
+
+    @include smallDevice {
+      padding: 1rem 2rem;
+    }
+  }
+  .hero-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    height: 100%;
+    gap: 1.5rem;
+    @include mediumDevice {
+      flex-direction: column;
+    }
+
+    > * {
+      flex: 1;
+      height: 100%;
+      height: 650px;
+      @include mediumDevice {
+        height: unset;
+      }
+    }
+    @include mediumDevice {
+      max-width: 100%;
+    }
+    .hero-text {
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      .heading {
+        font-size: 2.7rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+
+        @include smallerDevice {
+          font-size: 1.4rem;
+        }
+
+        .row {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          gap: 1rem;
+          word-spacing: 2rem;
+          .empower-by-metric {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid var(--color-primary);
+            padding: 0.5rem 0.8rem;
+            border-radius: 3rem;
+            .icon {
+              background-color: var(--color-secondary);
+              color: var(--color-black);
+              border-radius: 2rem;
+              padding: 0.2rem 1rem;
+              @include smallerDevice {
+                > * {
+                  width: 30px;
+                  height: 30px;
+                }
+              }
+            }
+          }
+        }
+        .socials {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          gap: 1rem;
+          padding: 1rem 1.5rem;
+          border: 2px solid var(--color-primary);
+          border-radius: 3rem;
+          .social {
+            height: 55px;
+            width: 55px;
+            border-radius: 50%;
+            background-color: var(--text-primary);
+            margin-left: -2rem;
+            border: 5px solid var(--color-black);
+            transition: 0.2s ease;
+            &:hover {
+              border-radius: 1rem;
+              transform: rotate(20deg);
+            }
+            @include smallerDevice {
+              height: 40px;
+              width: 40px;
+            }
+            &:first-of-type {
+              margin-left: 0;
+            }
+          }
+          p {
+            margin-left: auto;
+          }
+        }
+      }
+      .description {
+        font-size: 1.2rem;
+        color: var(--text-gray);
+      }
+      .call-to-actions {
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 1rem;
+        @include smallDevice {
+          justify-content: center;
+        }
+        button {
+          all: unset;
+          font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont,
+            "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+            "Helvetica Neue", sans-serif;
+          font-size: 1rem;
+          padding: 1.6rem 3rem;
+          background-color: var(--color-secondary);
+          border-radius: 3rem;
+          color: black;
+
+          border: 2px solid var(--color-secondary);
+          transition: 0.2s ease;
+          cursor: pointer;
+          &:hover {
+            border-radius: 1rem;
+          }
+          &:last-of-type {
+            border: 2px solid var(--color-primary);
+            background-color: var(--color-black);
+            color: var(--color-primary);
+          }
+          @include smallerDevice {
+            padding: 1.3rem 2rem;
+          }
+        }
+      }
+    }
+    .hero-visual {
+      min-width: 250px;
+      background: linear-gradient(var(--fg-dark), var(--color-black));
+      border-radius: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      max-width: 100%;
+
+      img {
+        height: 780px;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.hero,
+.faq,
+.footer {
+  position: relative;
+  margin: 0 2rem 2rem 2rem;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: column;
+  overflow: hidden;
+
+  @include smallDevice {
+    margin: 0 1rem 1rem 1rem;
+    padding: 1rem;
+    &.Home {
+      padding: 0;
+    }
+  }
+
+  @include smallDevice {
+    min-height: calc(100vh - 122px - 76px);
+    justify-content: start;
+  }
+
+  .hero-text {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.hero.showcase {
+  background: var(--bg-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: max-content;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .row {
+    display: flex;
+    width: 1200px;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    div {
+      flex: 1;
+      background-color: var(--fg-gray);
+      height: 400px;
+      max-width: 100%;
+      min-width: 250px;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      transition: 0.3s ease;
+      &:hover {
+        background-color: var(--color-darkgray);
+        border-radius: 3rem;
+      }
+    }
+  }
+}
+
+.faq {
+  padding-block: 5rem;
+
+  > * {
+    max-width: 100%;
+  }
+}
+
+.footer {
+  background: linear-gradient(var(--fg-dark), var(--color-black));
+}

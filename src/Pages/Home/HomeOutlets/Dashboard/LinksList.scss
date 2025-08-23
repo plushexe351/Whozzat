@@ -1,0 +1,52 @@
+@use "../../../../mixins.scss" as *;
+
+.links-list-container {
+  max-width: calc(var(--max-width));
+  // padding: 1rem;
+  margin-inline: auto;
+  border-top: 1px solid var(--color-border);
+
+  .title {
+    margin-block: 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-dashboard);
+  }
+}
+.links-list {
+  width: 100%;
+  // margin-inline: auto;
+  // max-width: var(--max-width);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1rem;
+  @include mediumDevice {
+    padding: 0;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  // * {
+  //   transition: 0.1s ease;
+  // }
+  .add-link-btn {
+    height: 275px;
+    border-radius: 0.6rem;
+    color: var(--text-dashboard);
+    background-color: var(--color-background-dark);
+    border: 2px solid var(--color-background-secondary);
+    cursor: pointer;
+    &:hover {
+      background-color: var(--color-background-secondary);
+      border: 2px solid transparent;
+      color: var(--text-primary);
+      border-radius: 1rem;
+    }
+  }
+}
+
+// .links-list-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }

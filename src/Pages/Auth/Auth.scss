@@ -1,0 +1,153 @@
+@use "../../mixins.scss" as *;
+
+.Auth {
+  min-height: calc(100vh - 124px);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem;
+  @include mediumDevice {
+    padding: 2rem 1rem;
+  }
+  .error {
+    color: var(--text-error);
+    font-size: 0.8rem !important;
+  }
+  .AuthForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    // gap: 0.5rem;
+    padding: 2rem 2rem;
+    background-color: var(--fg-dark);
+    text-align: center;
+    width: 500px;
+    border-radius: 3rem;
+    font-size: 1.2rem;
+    .title {
+      font-size: 2.2rem;
+      font-weight: normal;
+      color: var(--text-secondary);
+    }
+    .description {
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      button {
+        all: unset;
+        padding: 1rem 0rem;
+        border: 2px solid var(--color-primary);
+        width: 100%;
+        border-radius: 3rem;
+        color: var(--color-primary);
+        font-weight: 600;
+        font-size: 1rem;
+
+        cursor: pointer;
+        transition: 0.2s ease;
+        &:hover {
+          border-radius: 1rem;
+        }
+        &.signinwithgoogle div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+          img {
+            height: 20px;
+            object-fit: cover;
+          }
+        }
+        &.createAccount {
+          background-color: var(--color-accent-dark);
+          color: var(--color-primary);
+          border: 2px solid var(--color-accent-dark);
+        }
+        &.signUp {
+          border: 2px solid var(--color-secondary);
+        }
+      }
+      .privacyDisclaimer {
+        font-size: 0.8rem;
+        color: var(--text-dark);
+        a {
+          color: var(--color-secondary);
+        }
+      }
+      .separator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        color: var(--text-primary);
+        .line {
+          height: 1px;
+          flex: 1;
+          background: var(--text-dark);
+        }
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: var(--color-primary);
+      }
+    }
+    .inputForm {
+      font-size: 1rem;
+      input {
+        background-color: var(--color-primary);
+        border-radius: 0.4rem;
+        padding: 1rem;
+        margin-block: 0.2rem !important;
+        &.password {
+          margin-bottom: 2rem !important;
+        }
+        &:-webkit-autofill {
+          box-shadow: 0 0 0 1000px var(--color-primary) inset !important;
+          -webkit-text-fill-color: var(--color-black) !important;
+        }
+        &:focus {
+          outline: 2px solid var(--color-accent);
+        }
+        &:first-of-type {
+          border-radius: 1rem 1rem 0.4rem 0.4rem;
+        }
+        &.password {
+          border-radius: 0.4rem 0.4rem 1rem 1rem !important;
+        }
+      }
+      .profile-img-input-preview-container {
+        background-color: var(--color-darkgray);
+        padding: 1rem;
+        border-radius: 3rem;
+        margin-bottom: 1rem;
+      }
+      .profileImgPreview {
+        background-color: var(--color-gray);
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 8px auto;
+      }
+      .profileImgInputLabel {
+        cursor: pointer;
+        p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+}
