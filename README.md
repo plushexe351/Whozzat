@@ -6,8 +6,8 @@ An app for all your links in one place, with a skewmorphic. old school UI paying
 
 | Feature                         | Status          | Notes                                      |
 |---------------------------------|------------------|--------------------------------------------|
-| -[] Landing Page                 | WIP        |                    |
-| -[x] Authentication               | Complete  | Basic login/register done, improvements pending |
+| - [] Landing Page                 | WIP        |                    |
+| - [x] Authentication               | Complete  | Basic login/register done, improvements pending |
 | -[] Profile Customization Page    | To Do            | Add bio, profile pic, background, etc.     |
 | -[x] Add / Remove Links UI         | To Do            | User can manage their personal links       |
 | -[] Link Analytics Dashboard      | To Do            | Clicks, impressions, device info, etc.     |
