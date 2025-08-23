@@ -142,11 +142,9 @@
 
   .remove-image {
     margin-block: 0.5rem 1rem;
+    cursor: pointer;
   }
 
-  .add-link-form input[type="file"] {
-    // margin-top: 0.5rem;
-  }
   .add-link-submit {
     width: 100%;
     margin-top: auto;

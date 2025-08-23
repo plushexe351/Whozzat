@@ -42,7 +42,7 @@ const EditLinkModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onEdit({
+    const updatedLink = {
       ...link,
       name,
       url,
@@ -50,7 +50,9 @@ const EditLinkModal = ({
       image,
       pinned,
       category,
-    });
+      imageUrl: imagePreview ? link.imageUrl : null,
+    };
+    onEdit(updatedLink);
     onClose();
   };
 
@@ -149,9 +151,15 @@ const EditLinkModal = ({
           {imagePreview && (
             <>
               <img src={imagePreview} alt="Preview" className="image-preview" />
-              <button className="remove-image">
+              <div
+                className="remove-image"
+                onClick={() => {
+                  setImagePreview(null);
+                  setImage(null);
+                }}
+              >
                 <Trash2 size={17} stroke="#e3dcff" />
-              </button>
+              </div>
             </>
           )}
 
