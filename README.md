@@ -1,6 +1,6 @@
 # Whozzat
 
-An app for all your links in one place, with a skewmorphic. old school UI paying a subtle omage to Frutiger Aero
+An app for all your links in one place, with a material you inspired design built from scratch.
 
 ## 📋 Feature TODO List 
 
