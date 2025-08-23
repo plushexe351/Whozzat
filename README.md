@@ -17,8 +17,3 @@ An app for all your links in one place, with a material you inspired design buil
 - [ ] SEO & Open Graph Meta Tags — To Do (for sharing profile links on social media)
 - [ ] Deployment — To Do
 
-
-
-## 🌐 Live Preview
-
-[Click here to view the live app](https://whozzat.vercel.app)
