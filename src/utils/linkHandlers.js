@@ -30,6 +30,7 @@ export async function handleAddCategory(
   newCategory,
   setNewCategory,
   setCategories,
+  setCategory,
   addToast
 ) {
   e.preventDefault();
@@ -50,6 +51,7 @@ export async function handleAddCategory(
     ]);
 
     addToast(`New category added '${name}'`, "success");
+    setCategory(name);
   } catch (err) {
     console.log("Error adding category", err);
     addToast(`Failed to add category '${name}'`, "error");
@@ -63,6 +65,7 @@ export async function handleEditCategory(
   newName,
   user,
   setCategories,
+  setCategory,
   onClose,
   addToast
 ) {
@@ -78,9 +81,38 @@ export async function handleEditCategory(
       prev.map((cat) => (cat.id === categoryId ? { ...cat, name } : cat))
     );
     addToast(`Category renamed successfully`, "success");
+    setCategory(name);
   } catch (err) {
     console.log(`Error editing category : ${name}, Error: ${err}`);
     addToast(`Failed to edit category '${name}'`, "success");
+  } finally {
+    onClose();
+  }
+}
+
+export async function handleDeleteCategory(
+  categoryId,
+  user,
+  setCategories,
+  setCategory,
+  onClose,
+  addToast
+) {
+  if (!categoryId) return;
+
+  try {
+    const categoryRef = doc(db, "users", user.uid, "categories", categoryId);
+
+    await deleteDoc(categoryRef);
+
+    // update local state
+    setCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
+
+    addToast("Category deleted", "success");
+    setCategory("All");
+  } catch (err) {
+    console.error("Error deleting category", err);
+    addToast("Failed to delete category", "error");
   } finally {
     onClose();
   }

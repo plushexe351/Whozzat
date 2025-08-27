@@ -118,11 +118,13 @@ const Dashboard = () => {
               <AddCategoryModal
                 open={categoryModalOpen}
                 onClose={() => setCategoryModalOpen(false)}
+                setCategory={setCategory}
               />
               <EditCategoryModal
                 open={categoryEditModalOpen}
                 onClose={() => setCategoryEditModalOpen(false)}
                 category={currentCategoryObj}
+                setCategory={setCategory}
               />
             </div>
             <div className="profile">
@@ -143,6 +145,7 @@ const Dashboard = () => {
           onClose={() => setModalOpen(false)}
           onAdd={(data) => handleAddLink(data, user, setLinks, addToast)}
           categories={categories}
+          currentCategoryObj={currentCategoryObj}
         />
         <EditLinkModal
           open={editModalOpen}

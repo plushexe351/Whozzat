@@ -37,16 +37,33 @@ const PRESETS = [
   },
 ];
 
-const AddLinkModal = ({ open, onClose, onAdd, categories }) => {
-  const [selected, setSelected] = useState(PRESETS[0]);
+const AddLinkModal = ({
+  open,
+  onClose,
+  onAdd,
+  categories,
+  currentCategoryObj,
+}) => {
+  // Set initial selected preset and category
+  const initialCategory = currentCategoryObj?.id || "";
+  const [selected, setSelected] = useState({
+    ...PRESETS[0],
+    category: initialCategory,
+  });
   const [name, setName] = useState(selected.name || "");
-
   const [url, setUrl] = useState(selected.placeholder);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   const { addToast } = useToast();
+
+  // Reset category when modal opens
+  React.useEffect(() => {
+    if (open) {
+      setSelected((prev) => ({ ...PRESETS[0], category: initialCategory }));
+    }
+  }, [open, initialCategory]);
 
   if (!open) return null;
 
@@ -73,7 +90,7 @@ const AddLinkModal = ({ open, onClose, onAdd, categories }) => {
     setDescription("");
     setImage(null);
     setImagePreview(null);
-    setSelected(PRESETS[0]);
+    setSelected({ ...PRESETS[0], category: initialCategory });
     onClose();
   };
 

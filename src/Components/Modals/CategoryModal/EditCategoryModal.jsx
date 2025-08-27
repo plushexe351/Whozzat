@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import "./CategoryModal.scss";
-import { handleEditCategory } from "../../../utils/linkHandlers";
+import {
+  handleDeleteCategory,
+  handleEditCategory,
+} from "../../../utils/linkHandlers";
 import { useAuth } from "../../../Context/AuthContext";
 import { useData } from "../../../Context/DataContext";
 import { useToast } from "../../../Context/ToastContext";
 import { motion } from "framer-motion";
+import { Trash } from "lucide-react";
 
-const EditCategoryModal = ({ open, onClose, category }) => {
+const EditCategoryModal = ({ open, onClose, category, setCategory }) => {
   if (!open) return null;
 
   const [newCategoryName, setNewCategoryName] = useState(category?.name || "");
@@ -19,12 +23,23 @@ const EditCategoryModal = ({ open, onClose, category }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Edit Category");
     handleEditCategory(
       categoryId,
       newCategoryName,
       user,
       setCategories,
+      setCategory,
+      onClose,
+      addToast
+    );
+  };
+
+  const handleDelete = () => {
+    handleDeleteCategory(
+      categoryId,
+      user,
+      setCategories,
+      setCategory,
       onClose,
       addToast
     );
@@ -41,7 +56,7 @@ const EditCategoryModal = ({ open, onClose, category }) => {
         <button className="close-btn" onClick={onClose}>
           &times;
         </button>
-        <h2>Add Category</h2>
+        <h2>Edit Category</h2>
         <form onSubmit={handleSubmit} className="category-form">
           <label htmlFor="category-name"></label>
           <input
@@ -51,9 +66,14 @@ const EditCategoryModal = ({ open, onClose, category }) => {
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
           />
-          <button type="submit" className="submit">
-            Edit Category
-          </button>
+          <div className="buttons">
+            <button type="submit" className="submit">
+              Rename
+            </button>
+            <button type="button" className="delete" onClick={handleDelete}>
+              <Trash size={20} stroke="red" />
+            </button>
+          </div>
         </form>
       </div>
     </motion.div>

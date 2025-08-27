@@ -57,10 +57,22 @@
         padding: 1rem 2rem;
         font-weight: 500;
         font-size: 1rem;
-        box-shadow: 0 2px 8px #217ee933;
         cursor: pointer;
         transition: background 0.2s;
         border: 2px solid c4b6fd;
+      }
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        > * {
+          cursor: pointer;
+        }
+        .delete {
+          padding: 1rem;
+        }
       }
     }
   }
