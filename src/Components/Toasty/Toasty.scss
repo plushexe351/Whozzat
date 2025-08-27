@@ -17,13 +17,17 @@
     gap: 1rem;
     padding: 0.5rem 1rem;
     border-radius: 1rem;
-    background: linear-gradient(
-      rgba(128, 128, 128, 0.541),
-      rgba(128, 128, 128, 0.561)
-    );
-    border: 1px solid rgba(128, 128, 128, 0.155);
+    background-color: var(--color-darkgray);
+    // border: 1px solid rgba(128, 128, 128, 0.155);
     -webkit-backdrop-filter: blur(1.5rem);
     backdrop-filter: blur(1.5rem);
-    color: white;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    &.success {
+      color: var(--text-success);
+    }
+    &.error {
+      color: var(--text-error);
+    }
   }
 }

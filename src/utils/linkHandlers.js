@@ -63,22 +63,27 @@ export async function handleEditCategory(
   newName,
   user,
   setCategories,
-  setEditModalOpen,
+  onClose,
   addToast
 ) {
   if (!user || !categoryId) return;
   const name = newName.trim();
   if (!name) return;
 
-  const catDoc = doc(db, "users", user.uid, "categories", categoryId);
+  try {
+    const catDoc = doc(db, "users", user.uid, "categories", categoryId);
 
-  await setDoc(catDoc, { name }, { merge: true });
-
-  setCategories((prev) =>
-    prev.map((cat) => (cat.id === categoryId ? { ...cat, name } : cat))
-  );
-
-  if (setEditModalOpen) setEditModalOpen(false);
+    await setDoc(catDoc, { name }, { merge: true });
+    setCategories((prev) =>
+      prev.map((cat) => (cat.id === categoryId ? { ...cat, name } : cat))
+    );
+    addToast(`Category renamed successfully`, "success");
+  } catch (err) {
+    console.log(`Error editing category : ${name}, Error: ${err}`);
+    addToast(`Failed to edit category '${name}'`, "success");
+  } finally {
+    onClose();
+  }
 }
 
 export async function handleAddLink(data, user, setLinks) {
