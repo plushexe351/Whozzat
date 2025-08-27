@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { db, collection, getDocs } from "../firebase";
 import { useAuth } from "./AuthContext";
 import { sortLinksByPinnedAndDate } from "../utils/linkHandlers";
+import { useLocation, useNavigate } from "react-router";
 
 const DataContext = createContext();
 
@@ -9,6 +10,10 @@ export const DataProvider = ({ children }) => {
   const { user } = useAuth();
   const [links, setLinks] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("All");
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -59,7 +64,14 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider
-      value={{ links, setLinks, categories, setCategories }}
+      value={{
+        links,
+        setLinks,
+        categories,
+        setCategories,
+        category,
+        setCategory,
+      }}
     >
       {children}
     </DataContext.Provider>

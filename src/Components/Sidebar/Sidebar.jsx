@@ -1,15 +1,18 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import "./Sidebar.scss";
 import logo from "../../assets/whozzat-logo.png";
 import { Home, Link, LogOut, Settings, Share } from "react-feather";
 import { ChartBar, User } from "lucide-react";
 import { handleSignOut } from "../../utils/authHandlers";
 import { useToast } from "../../Context/ToastContext";
+import { useData } from "../../Context/DataContext";
 
 const Sidebar = () => {
   const { addToast } = useToast();
+  const { categories, setCategories, category, setCategory } = useData();
   const location = useLocation();
+  const navigate = useNavigate();
   const NavLinks = [
     {
       title: "Dashboard",
@@ -30,24 +33,6 @@ const Sidebar = () => {
       title: "Settings",
       path: "/home/settings",
       icon: <Settings className="icon" size={17} />,
-    },
-  ];
-  const Categories = [
-    {
-      title: "All",
-      path: "/home/dashboard",
-    },
-    {
-      title: "Socials",
-      path: "/home/dashboard",
-    },
-    {
-      title: "Projects",
-      path: "/home/mylinks",
-    },
-    {
-      title: "Other",
-      path: "/home/analytics",
     },
   ];
 
@@ -77,10 +62,28 @@ const Sidebar = () => {
       <div className="categories">
         <div className="title">Categories</div>
         <nav>
-          {Categories.map((cat, index) => (
-            <NavLink to={cat.path} className="navlink" key={index}>
-              {cat.title}
-            </NavLink>
+          <div
+            className={`navlink ${category === "All" ? "active" : ""}`}
+            onClick={() => {
+              setCategory("All");
+              navigate("/home/dashboard");
+            }}
+          >
+            All
+          </div>
+          {categories.map((cat, index) => (
+            <div
+              className={`navlink ${category === cat.name ? "active" : ""}`}
+              key={cat.id + "d2"}
+              onClick={() => {
+                setCategory(cat.name);
+                navigate(
+                  `/home/dashboard?category=${encodeURIComponent(cat.name)}`
+                );
+              }}
+            >
+              {cat.name}
+            </div>
           ))}
         </nav>
       </div>

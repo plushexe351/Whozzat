@@ -130,7 +130,7 @@ const EditLinkModal = ({
           >
             <option value="">No Category</option>
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
+              <option key={cat.id + "d"} value={cat.id}>
                 {cat.name}
               </option>
             ))}

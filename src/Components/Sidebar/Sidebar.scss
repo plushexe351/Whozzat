@@ -77,6 +77,10 @@
         border-radius: 0.3rem;
         background-color: var(--color-background-primary);
         color: var(--text-secondary);
+        cursor: pointer;
+        &.active {
+          background-color: var(--color-darkgray);
+        }
         &:first-of-type {
           border-radius: 1rem 1rem 0.3rem 0.3rem;
         }
