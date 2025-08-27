@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./LinkModal.scss";
-import { CloudUpload } from "lucide-react";
+import { CloudUpload, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "../../../Context/ToastContext";
 
@@ -167,7 +167,18 @@ const AddLinkModal = ({ open, onClose, onAdd, categories }) => {
             hidden
           />
           {imagePreview && (
-            <img src={imagePreview} alt="Preview" className="image-preview" />
+            <>
+              <img src={imagePreview} alt="Preview" className="image-preview" />
+              <div
+                className="remove-image"
+                onClick={() => {
+                  setImagePreview(null);
+                  setImage(null);
+                }}
+              >
+                <Trash2 size={17} stroke="#e3dcff" />
+              </div>
+            </>
           )}
           <button type="submit" className="add-link-submit">
             Add Link
