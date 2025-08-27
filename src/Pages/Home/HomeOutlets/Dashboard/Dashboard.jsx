@@ -21,6 +21,8 @@ import LazyImage from "../../../../Components/LazyImg";
 import AddCategoryModal from "../../../../Components/Modals/CategoryModal/AddCategoryModal";
 import { useToast } from "../../../../Context/ToastContext";
 import { useLocation, useNavigate } from "react-router";
+import EditCategoryModal from "../../../../Components/Modals/CategoryModal/EditCategoryModal";
+import { Edit, Edit2, Edit3, Edit3Icon, Pen, Pencil } from "lucide-react";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -28,9 +30,11 @@ const Dashboard = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [categoryEditModalOpen, setCategoryEditModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState(null);
   const [actionMenuId, setActionMenuId] = useState(null);
   const [category, setCategory] = useState("All");
+  const [currentCategoryObj, setCurrentCategoryObj] = useState(null);
   const { addToast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,6 +65,7 @@ const Dashboard = () => {
   const filteredLinks = useMemo(() => {
     if (category === "All") return links;
     const selectedCat = categories.find((cat) => cat.name === category);
+    setCurrentCategoryObj(selectedCat);
     if (selectedCat) {
       return links.filter((link) => link.category === selectedCat.id);
     }
@@ -113,6 +118,13 @@ const Dashboard = () => {
               <AddCategoryModal
                 open={categoryModalOpen}
                 onClose={() => setCategoryModalOpen(false)}
+                setCategory={setCategory}
+              />
+              <EditCategoryModal
+                open={categoryEditModalOpen}
+                onClose={() => setCategoryEditModalOpen(false)}
+                category={currentCategoryObj}
+                setCategory={setCategory}
               />
             </div>
             <div className="profile">
@@ -133,6 +145,7 @@ const Dashboard = () => {
           onClose={() => setModalOpen(false)}
           onAdd={(data) => handleAddLink(data, user, setLinks, addToast)}
           categories={categories}
+          currentCategoryObj={currentCategoryObj}
         />
         <EditLinkModal
           open={editModalOpen}
@@ -156,8 +169,16 @@ const Dashboard = () => {
       </AnimatePresence>
       <div className="links-list-container">
         <div className="title">
-          {category === "All" ? "All Links" : `${category} Links`} (
-          {filteredLinks.length})
+          {category === "All" ? "All Links" : `${category}`} (
+          {filteredLinks.length}){" "}
+          {category !== "All" && (
+            <Edit
+              size={17}
+              stroke="#c4b6fd"
+              className="editCategoryModalToggle icon"
+              onClick={() => setCategoryEditModalOpen(true)}
+            />
+          )}
         </div>
         <div className="links-list">
           <button className="add-link-btn" onClick={() => setModalOpen(true)}>

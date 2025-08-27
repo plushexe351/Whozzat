@@ -6,7 +6,7 @@ import { useData } from "../../../Context/DataContext";
 import { motion } from "framer-motion";
 import { useToast } from "../../../Context/ToastContext";
 
-const AddCategoryModal = ({ open, onClose }) => {
+const AddCategoryModal = ({ open, onClose, setCategory }) => {
   if (!open) return null;
 
   const { user } = useAuth();
@@ -36,6 +36,7 @@ const AddCategoryModal = ({ open, onClose }) => {
               newCategory,
               setNewCategory,
               setCategories,
+              setCategory,
               addToast
             );
             onClose();

@@ -22,6 +22,7 @@
   --text-gray: gray;
   --text-dark: rgb(73, 73, 73);
   --text-error: red;
+  --text-success: rgb(129, 214, 129);
 
   --color-background-primary: #262433;
   --color-background-secondary: #26243399;
