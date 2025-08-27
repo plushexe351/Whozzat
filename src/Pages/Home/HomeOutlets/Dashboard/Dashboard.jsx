@@ -1,3 +1,4 @@
+// Sync category state with URL param on mount or param change
 import { AnimatePresence } from "framer-motion";
 import React, { useState, useEffect, useMemo } from "react";
 import AddLinkModal from "../../../../Components/Modals/LinkModal/AddLinkModal";
@@ -26,14 +27,13 @@ import { Edit, Edit2, Edit3, Edit3Icon, Pen, Pencil } from "lucide-react";
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { links, setLinks, categories } = useData();
+  const { links, setLinks, categories, category, setCategory } = useData();
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [categoryEditModalOpen, setCategoryEditModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState(null);
   const [actionMenuId, setActionMenuId] = useState(null);
-  const [category, setCategory] = useState("All");
   const [currentCategoryObj, setCurrentCategoryObj] = useState(null);
   const { addToast } = useToast();
   const location = useLocation();
@@ -49,28 +49,19 @@ const Dashboard = () => {
     }
   }, [location.search]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const currentParam = params.get("category") || "All";
-    if (category !== currentParam) {
-      if (category === "All") {
-        params.delete("category");
-      } else {
-        params.set("category", category);
-      }
-      navigate({ search: params.toString() }, { replace: true });
-    }
-  }, [category, location.search, navigate]);
-
   const filteredLinks = useMemo(() => {
     if (category === "All") return links;
     const selectedCat = categories.find((cat) => cat.name === category);
-    setCurrentCategoryObj(selectedCat);
     if (selectedCat) {
       return links.filter((link) => link.category === selectedCat.id);
     }
     return [];
   }, [links, categories, category]);
+
+  useEffect(() => {
+    const selectedCat = categories.find((cat) => cat.name === category);
+    setCurrentCategoryObj(selectedCat);
+  }, [category, categories]);
 
   return (
     <div className="Dashboard">
@@ -96,6 +87,7 @@ const Dashboard = () => {
                 onClick={() => {
                   setCategory("All");
                   setCategoryModalOpen(false);
+                  navigate("/home/dashboard");
                 }}
               >
                 <Link className="icon" size={17} />
@@ -108,6 +100,9 @@ const Dashboard = () => {
                   onClick={() => {
                     setCategory(cat.name);
                     setCategoryModalOpen(false);
+                    navigate(
+                      `/home/dashboard?category=${encodeURIComponent(cat.name)}`
+                    );
                   }}
                 >
                   <Link className="icon" size={17} />

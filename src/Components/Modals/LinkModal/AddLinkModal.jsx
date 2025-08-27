@@ -165,7 +165,7 @@ const AddLinkModal = ({
             <option value="">No Category</option>
             {categories &&
               categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
+                <option key={cat.id + "d1"} value={cat.id}>
                   {cat.name}
                 </option>
               ))}
