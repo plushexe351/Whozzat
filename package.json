@@ -12,14 +12,17 @@
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.1.11",
+    "chart.js": "^4.5.0",
     "firebase": "^11.9.1",
     "framer-motion": "^12.19.2",
     "lucide-react": "^0.523.0",
     "react": "^19.1.0",
+    "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.1.0",
     "react-feather": "^2.0.10",
     "react-lazy-load-image-component": "^1.6.3",
     "react-router": "^7.6.2",
+    "recharts": "^3.1.2",
     "sass": "^1.89.2",
     "tailwindcss": "^4.1.11"
   },

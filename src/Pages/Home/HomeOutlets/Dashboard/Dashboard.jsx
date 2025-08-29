@@ -13,6 +13,7 @@ import {
   handlePinLink,
   handleBookmarkLink,
 } from "../../../../utils/linkHandlers";
+import WhozzatLogo from "../../../../assets/whozzat-logo.png";
 
 import { Link, Mail, Plus } from "react-feather";
 
@@ -23,7 +24,17 @@ import AddCategoryModal from "../../../../Components/Modals/CategoryModal/AddCat
 import { useToast } from "../../../../Context/ToastContext";
 import { useLocation, useNavigate } from "react-router";
 import EditCategoryModal from "../../../../Components/Modals/CategoryModal/EditCategoryModal";
-import { Edit, Edit2, Edit3, Edit3Icon, Pen, Pencil } from "lucide-react";
+import {
+  Edit,
+  Edit2,
+  Edit3,
+  Edit3Icon,
+  Pen,
+  Pencil,
+  Sidebar,
+} from "lucide-react";
+import { useUI } from "../../../../Context/UIContext";
+import QuickAnalytics from "../../../../Components/QuickAnalytics/QuickAnalytics";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -68,13 +79,20 @@ const Dashboard = () => {
       <header>
         <div className="header-container">
           <div className="header-content">
-            <h1 className="title">
-              Whozzat{" "}
-              <span className="username">
-                <Mail size={17} className="icon" />
-                {user?.email}
-              </span>
-            </h1>
+            <div className="profile">
+              <div className="title">
+                <span className="username">
+                  <Mail size={17} className="icon" />
+                  {user?.email}
+                </span>
+              </div>
+              <LazyImage
+                src={user?.profileURL}
+                alt=""
+                className="profile-img"
+              />
+              <p>@{user?.displayName}</p>
+            </div>
             <div className="categories">
               <button
                 className="add-category"
@@ -122,17 +140,11 @@ const Dashboard = () => {
                 setCategory={setCategory}
               />
             </div>
-            <div className="profile">
-              <LazyImage
-                src={user?.profileURL}
-                alt=""
-                className="profile-img"
-              />
-              <p>@{user?.displayName}</p>
-            </div>
+            <QuickAnalytics />
           </div>
         </div>
       </header>
+      <QuickAnalytics isMobile={true} />
 
       <AnimatePresence>
         <AddLinkModal

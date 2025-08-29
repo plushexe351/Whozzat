@@ -5,6 +5,9 @@
   justify-content: center;
   align-items: center;
   background-color: var(--fg-dark);
+  // @include smallerDevice{
+  //   flex-direction: column;
+  // }
   .main {
     flex: 1;
     height: 100vh;
@@ -16,6 +19,9 @@
     }
     @include smallDevice {
       padding: 1rem;
+    }
+    @include smallerDevice {
+      padding-top: 0;
     }
 
     .dummy-wrapper {

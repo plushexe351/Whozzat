@@ -78,7 +78,7 @@ const AddLinkModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     onAdd({
-      name: selected.name || name,
+      name: name,
       icon: selected.icon,
       url,
       description,

@@ -8,9 +8,10 @@ export const useUI = () => useContext(UIContext);
 
 export const UIProvider = ({ children }) => {
   const [showGreet, setShowGreet] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   return (
-    <UIContext.Provider value={{ showGreet, setShowGreet }}>
+    <UIContext.Provider value={{ showGreet, setShowGreet, showSidebar, setShowSidebar }}>
       {children}
     </UIContext.Provider>
   );

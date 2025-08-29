@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import "./Sidebar.scss";
 import logo from "../../assets/whozzat-logo.png";
 import { Home, Link, LogOut, Settings, Share } from "react-feather";
-import { ChartBar, User } from "lucide-react";
+import { ChartBar, Plus, User, X } from "lucide-react";
 import { handleSignOut } from "../../utils/authHandlers";
 import { useToast } from "../../Context/ToastContext";
 import { useData } from "../../Context/DataContext";
+import { useUI } from "../../Context/UIContext";
+import AddCategoryModal from "../Modals/CategoryModal/AddCategoryModal";
 
 const Sidebar = () => {
   const { addToast } = useToast();
   const { categories, setCategories, category, setCategory } = useData();
+  const { showSidebar, setShowSidebar } = useUI();
+
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const NavLinks = [
@@ -37,10 +43,13 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="Sidebar">
+    <div className={`Sidebar ${showSidebar ? "open" : ""}`}>
       <div className="logo">
         <img src={logo} alt="" width={65} />
         Whozzat
+        <button className="close-sidebar" onClick={() => setShowSidebar(false)}>
+          &times;
+        </button>
       </div>
       <div className="navigation">
         <div className="title">Navigation</div>
@@ -52,6 +61,7 @@ const Sidebar = () => {
                 location.pathname === link.path ? "active" : ""
               }`}
               key={index}
+              onClick={() => setShowSidebar(false)}
             >
               {link.icon}
               {link.title}
@@ -60,8 +70,20 @@ const Sidebar = () => {
         </nav>
       </div>
       <div className="categories">
+        <AddCategoryModal
+          open={categoryModalOpen}
+          onClose={() => setCategoryModalOpen(false)}
+          setCategory={setCategory}
+        />
         <div className="title">Categories</div>
         <nav>
+          <div
+            className={`navlink add-category-toggle`}
+            onClick={() => setCategoryModalOpen(true)}
+          >
+            <Plus stroke="#888" size={17} />
+            <span>Add new category</span>
+          </div>
           <div
             className={`navlink ${category === "All" ? "active" : ""}`}
             onClick={() => {
@@ -80,6 +102,7 @@ const Sidebar = () => {
                 navigate(
                   `/home/dashboard?category=${encodeURIComponent(cat.name)}`
                 );
+                setShowSidebar(false);
               }}
             >
               {cat.name}
