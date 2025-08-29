@@ -45,7 +45,6 @@ const LinkItem = ({
   return (
     <motion.div
       className="link-item"
-      key={link.id}
       initial={{ y: 0, scale: 0.9 }}
       animate={{ y: 0, scale: 1 }}
     >

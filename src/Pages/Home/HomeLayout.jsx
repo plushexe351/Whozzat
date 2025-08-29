@@ -16,6 +16,7 @@ import { Outlet } from "react-router";
 
 import "./HomeLayout.scss";
 import Sidebar from "../../Components/Sidebar/Sidebar";
+import MobileNav from "../../Components/MobileNav/MobileNav";
 
 const Home = () => {
   const { user } = useAuth();
@@ -75,8 +76,10 @@ const Home = () => {
       initial={{ opacity: 0, y: -100, x: -10, scale: 0.8 }}
       animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
     >
+      {/* <MobileNav /> */}
       <Sidebar />
       <div className="main">
+        <MobileNav />
         <Outlet />
       </div>
     </motion.section>

@@ -10,8 +10,21 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  transition: 0.2s ease;
   @include smallerDevice {
-    display: none;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    background-color: var(--bg-dark);
+    z-index: 1000;
+    transform: translateX(-100%);
+    &.open {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
   .logo {
     width: 100%;
@@ -23,6 +36,16 @@
     font-weight: 500;
     font-size: 1.2rem;
     border-bottom: 1px solid var(--color-darkgray);
+    .close-sidebar {
+      display: none;
+      margin-left: auto;
+      font-size: 2rem;
+      color: var(--color-primary);
+      cursor: pointer;
+      @include smallerDevice {
+        display: block;
+      }
+    }
   }
   .navigation nav .navlink:hover {
     background-color: var(--color-background-primary);
@@ -56,9 +79,15 @@
         padding: 0.3rem 0.75rem;
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.3rem;
         font-size: 14px;
         transition: 0.1s ease;
+      }
+      .add-category-toggle {
+        span {
+          color: var(--text-dashboard);
+          font-size: 0.8rem;
+        }
       }
     }
   }

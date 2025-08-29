@@ -1,0 +1,37 @@
+@use "../../mixins.scss" as *;
+
+.mobile-nav {
+  width: 100%;
+  display: none;
+  justify-content: start;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  padding-left: 0;
+  @include smallerDevice {
+    display: flex;
+  }
+  .icon-sidebar {
+    // border-right: 1px solid var(--color-border);
+    // padding-right: 1rem;
+    cursor: pointer;
+    position: relative;
+    width: 30px;
+    display: flex;
+    border-right: 1px solid var(--color-border);
+  }
+}
+
+.mobile-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  img {
+    width: 45px;
+    height: 45px;
+  }
+  h1 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+}
