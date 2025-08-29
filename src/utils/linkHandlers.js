@@ -132,6 +132,7 @@ export async function handleAddLink(data, user, setLinks) {
     description: data.description,
     imageUrl,
     pinned: false,
+    visibility: true,
     createdAt: new Date().toISOString(),
     category: data.category || "",
   };
@@ -141,7 +142,6 @@ export async function handleAddLink(data, user, setLinks) {
   setLinks((prev) =>
     sortLinksByPinnedAndDate([...prev, { ...linkData, id: docRef.id }])
   );
-  console.log(data.category);
 }
 
 export async function handleEditLink(
@@ -165,6 +165,7 @@ export async function handleEditLink(
     description: data.description,
     imageUrl,
     pinned: data.pinned || false,
+    visibility: typeof data.visibility === "boolean" ? data.visibility : true,
     updatedAt: new Date().toISOString(),
     category: data.category || "",
   };
@@ -238,6 +239,29 @@ export async function handleBookmarkLink(
   setLinks((prev) =>
     prev.map((l) =>
       l.id === link.id ? { ...l, bookmarked: newBookmarked } : l
+    )
+  );
+  setActionMenuId && setActionMenuId(null);
+}
+
+export async function handleToggleVisibility(
+  link,
+  user,
+  setLinks,
+  setActionMenuId,
+  addToast
+) {
+  if (!user || !link.id) return;
+  const linkDoc = doc(db, "users", user.uid, "links", link.id);
+  const newVisibility = !link.visibility;
+  await setDoc(
+    linkDoc,
+    { visibility: newVisibility, updatedAt: new Date().toISOString() },
+    { merge: true }
+  );
+  setLinks((prev) =>
+    prev.map((l) =>
+      l.id === link.id ? { ...l, visibility: newVisibility } : l
     )
   );
   setActionMenuId && setActionMenuId(null);

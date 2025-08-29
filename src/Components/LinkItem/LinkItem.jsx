@@ -5,6 +5,9 @@ import {
   X,
   Link as LinkIcon,
   MessageCircle,
+  Bookmark,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import LinkActionModal from "../Modals/LinkActionModal/LinkActionModal";
 import { AnimatePresence, motion } from "framer-motion";
@@ -26,6 +29,8 @@ const LinkItem = ({
   user,
   setLinks,
   handleBookmarkLink,
+  handleToggleVisibility,
+  viewOnly,
 }) => {
   const optionsRef = useRef();
 
@@ -44,79 +49,112 @@ const LinkItem = ({
 
   return (
     <motion.div
-      className="link-item"
+      className={`link-item${link.visibility === false ? " is-hidden" : ""}`}
       initial={{ y: 0, scale: 0.9 }}
       animate={{ y: 0, scale: 1 }}
     >
-      {/* {link?.imageUrl && ( */}
       <LazyImage
         className="link-image"
         src={link.imageUrl || placeholderImg}
         alt={link.name}
       />
-      {/* )} */}
       <div className="link-details">
         <div className="link-name">
           {link.name}
           <div className="actions">
-            {link.pinned && <Pin size={20} stroke="#e3dcff" className="pin" />}
-          </div>
-          <div className="options" ref={optionsRef}>
-            {actionMenuId === link.id ? (
-              <X
-                size={18}
-                className="options-toggle"
-                stroke="red"
-                onClick={() => setActionMenuId(null)}
-              />
-            ) : (
-              <MoreVertical
-                size={18}
-                className="options-toggle"
-                onClick={() => setActionMenuId(link.id)}
+            {!viewOnly &&
+              typeof link.visibility === "boolean" &&
+              handleToggleVisibility && (
+                <button
+                  className="visibility-toggle"
+                  title={link.visibility ? "Hide link" : "Show link"}
+                  onClick={() =>
+                    handleToggleVisibility(
+                      link,
+                      user,
+                      setLinks,
+                      setActionMenuId,
+                      addToast
+                    )
+                  }
+                >
+                  {link.visibility ? (
+                    <Eye size={18} stroke="#e3dcff" />
+                  ) : (
+                    <EyeOff size={18} stroke="#e3dcff" />
+                  )}
+                </button>
+              )}
+            {!viewOnly && link.pinned && (
+              <Pin size={20} stroke="#e3dcff" className="pin" />
+            )}
+            {!viewOnly && link.bookmarked && (
+              <Bookmark
+                size={20}
+                stroke="#e3dcff"
+                fill="#e3dcff"
+                className="bookmark"
               />
             )}
-            <AnimatePresence>
-              {actionMenuId === link.id && (
-                <LinkActionModal
-                  onEdit={() => {
-                    setSelectedLink(link);
-                    setEditModalOpen(true);
-                    setActionMenuId(null);
-                  }}
-                  onDelete={() =>
-                    handleDeleteLink(
-                      link,
-                      user,
-                      setLinks,
-                      setActionMenuId,
-                      addToast
-                    )
-                  }
-                  onPin={() =>
-                    handlePinLink(
-                      link,
-                      user,
-                      setLinks,
-                      setActionMenuId,
-                      addToast
-                    )
-                  }
-                  onBookmark={() =>
-                    handleBookmarkLink(
-                      link,
-                      user,
-                      setLinks,
-                      setActionMenuId,
-                      addToast
-                    )
-                  }
-                  link={link}
-                  close={() => setActionMenuId(null)}
+          </div>
+          {!viewOnly && (
+            <div className="options" ref={optionsRef}>
+              {actionMenuId === link.id ? (
+                <X
+                  size={18}
+                  className="options-toggle"
+                  stroke="red"
+                  onClick={() => setActionMenuId(null)}
+                />
+              ) : (
+                <MoreVertical
+                  size={18}
+                  className="options-toggle"
+                  onClick={() => setActionMenuId(link.id)}
                 />
               )}
-            </AnimatePresence>
-          </div>
+              <AnimatePresence>
+                {actionMenuId === link.id && (
+                  <LinkActionModal
+                    onEdit={() => {
+                      setSelectedLink(link);
+                      setEditModalOpen(true);
+                      setActionMenuId(null);
+                    }}
+                    onDelete={() =>
+                      handleDeleteLink(
+                        link,
+                        user,
+                        setLinks,
+                        setActionMenuId,
+                        addToast
+                      )
+                    }
+                    onPin={() =>
+                      handlePinLink(
+                        link,
+                        user,
+                        setLinks,
+                        setActionMenuId,
+                        addToast
+                      )
+                    }
+                    onBookmark={() =>
+                      handleBookmarkLink(
+                        link,
+                        user,
+                        setLinks,
+                        setActionMenuId,
+                        addToast
+                      )
+                    }
+                    link={link}
+                    close={() => setActionMenuId(null)}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
         {link.description && (
           <div className="link-description">{link.description}</div>

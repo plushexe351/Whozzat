@@ -14,6 +14,7 @@ import LenisWrapper from "./LenisWrapper";
 import { UIProvider } from "./Context/UIContext";
 import Dashboard from "./Pages/Home/HomeOutlets/Dashboard/Dashboard";
 import Settings from "./Pages/Home/HomeOutlets/Settings/Settings";
+import PublicProfile from "./Pages/PublicProfile/PublicProfile";
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="settings" element={<Settings />} />
                 </Route>
+                {/* Public profile route */}
+                <Route path="/u/:username" element={<PublicProfile />} />
               </Routes>
             </div>
           </DataProvider>

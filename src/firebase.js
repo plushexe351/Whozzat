@@ -19,6 +19,8 @@ import {
   addDoc,
   collection,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -50,4 +52,14 @@ export {
 export const storage = getStorage(app);
 export { ref, uploadBytes, getDownloadURL };
 export const db = getFirestore(app);
-export { doc, setDoc, addDoc, getDoc, getDocs, collection, deleteDoc };
+export {
+  doc,
+  setDoc,
+  addDoc,
+  getDoc,
+  getDocs,
+  collection,
+  deleteDoc,
+  query,
+  where,
+};

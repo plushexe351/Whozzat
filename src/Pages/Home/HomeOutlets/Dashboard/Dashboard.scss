@@ -126,6 +126,7 @@
         .profile-img {
           height: 30px;
           width: 30px;
+          object-fit: cover;
           border-radius: 50%;
           flex-shrink: 0;
         }

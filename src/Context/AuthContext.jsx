@@ -17,21 +17,38 @@ export function AuthProvider({ children }) {
       if (firebaseUser) {
         let { displayName, email, photoURL, uid } = firebaseUser;
 
-        // If displayName or photoURL missing, fetch from Firestore
-        if (!displayName || !photoURL) {
-          try {
-            const userDocRef = doc(db, "users", uid);
-            const userDocSnap = await getDoc(userDocRef);
-            if (userDocSnap.exists()) {
-              const data = userDocSnap.data();
-              if (!displayName) displayName = data.username || "";
-              if (!photoURL) photoURL = data.profileURL || "";
-            }
-          } catch (e) {
-            console.log("firebase error:", e);
+        // Always fetch additional user data from Firestore
+        try {
+          const userDocRef = doc(db, "users", uid);
+          const userDocSnap = await getDoc(userDocRef);
+          if (userDocSnap.exists()) {
+            const data = userDocSnap.data();
+            if (!displayName) displayName = data.username || "";
+            if (!photoURL) photoURL = data.profileURL || "";
+            const bio = data.bio || "";
+            const coverURL = data.coverURL || "";
+            setUser({
+              displayName,
+              email,
+              profileURL: photoURL,
+              uid,
+              bio,
+              coverURL,
+            });
+            setLoading(false);
+            return;
           }
+        } catch (e) {
+          console.log("firebase error:", e);
         }
-        setUser({ displayName, email, profileURL: photoURL, uid });
+        setUser({
+          displayName,
+          email,
+          profileURL: photoURL,
+          uid,
+          bio: "",
+          coverURL: "",
+        });
       } else {
         setUser(null);
       }
