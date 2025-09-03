@@ -78,7 +78,7 @@ const Sidebar = () => {
       pushUnique(exactESnap.docs.map((d) => ({ id: d.id, ...d.data() })));
     } catch {}
 
-    // Prefix queries (best-effort; Firestore is case-sensitive)
+    // Prefix queries
     try {
       const q1 = query(
         usersCol,
