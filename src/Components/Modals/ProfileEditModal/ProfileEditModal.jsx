@@ -165,7 +165,7 @@ const ProfileEditModal = ({ open, onClose }) => {
                   className="change-picture-btn"
                   onClick={() => coverInputRef.current?.click()}
                 >
-                  Change Cover
+                  {user?.coverURL ? "Change Cover Image" : "Add Cover Image"}
                 </button>
               </div>
               <input

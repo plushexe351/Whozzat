@@ -1,14 +1,4 @@
-@mixin smallDevice {
-  @media screen and (max-width: 500px) {
-    @content;
-  }
-}
-
-@mixin mediumDevice {
-  @media screen and (max-width: 1000px) {
-    @content;
-  }
-}
+@use "../../mixins.scss" as *;
 
 .faq-footer h2 {
   text-align: center;
@@ -16,8 +6,12 @@
   color: white;
   font-size: 3rem;
   padding-bottom: 0.5rem;
+  @include smallerDevice {
+    font-size: 2rem;
+  }
   @include smallDevice {
     text-align: start;
+    font-size: 1.5rem;
   }
 }
 
@@ -38,8 +32,11 @@
   &:hover {
     border-radius: 3rem;
   }
-  @include smallDevice {
+  @include smallerDevice {
     padding: 1rem;
+  }
+  @include smallDevice {
+    padding: 0.5rem;
   }
 }
 
@@ -59,6 +56,9 @@
   align-items: center;
   @include mediumDevice {
     font-size: 1rem;
+  }
+  @include smallDevice {
+    font-size: 0.9rem;
   }
 }
 
@@ -91,5 +91,8 @@
   line-height: 1.5;
   @include mediumDevice {
     font-size: 0.9rem;
+  }
+  @include smallDevice {
+    font-size: 0.8rem;
   }
 }

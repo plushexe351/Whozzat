@@ -7,6 +7,7 @@ section {
 
 .hero.main {
   padding: 0;
+  padding-top: 1rem;
   justify-content: start;
   display: flex;
   flex-direction: column;
@@ -20,6 +21,7 @@ section {
     align-items: center;
     background-color: var(--fg-dark);
     color: var(--text-primary);
+    gap: 0.5rem;
     width: 100%;
     padding: 1rem 1rem 1rem 3rem;
     border-radius: 3rem;
@@ -36,7 +38,7 @@ section {
     }
 
     @include smallDevice {
-      padding: 1rem 2rem;
+      padding: 1rem 1rem 1rem 1.5rem;
     }
   }
   .hero-main {
@@ -117,8 +119,8 @@ section {
           border: 2px solid var(--color-primary);
           border-radius: 3rem;
           .social {
-            height: 55px;
-            width: 55px;
+            height: 45px;
+            width: 45px;
             border-radius: 50%;
             background-color: var(--text-primary);
             margin-left: -2rem;
@@ -142,6 +144,7 @@ section {
         }
       }
       .description {
+        max-width: 700px;
         font-size: 1.2rem;
         color: var(--text-gray);
       }
@@ -178,6 +181,14 @@ section {
           }
           @include smallerDevice {
             padding: 1.3rem 2rem;
+            font-size: 0.9rem;
+          }
+          @include smallDevice {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         }
       }
@@ -194,16 +205,16 @@ section {
       max-width: 100%;
 
       img {
-        height: 780px;
+        max-height: 780px;
         object-fit: cover;
+        max-width: 100%;
       }
     }
   }
 }
 
 .hero,
-.faq,
-.footer {
+.faq {
   position: relative;
   margin: 0 2rem 2rem 2rem;
   border-radius: 1rem;
@@ -255,18 +266,107 @@ section {
     gap: 0.5rem;
     flex-wrap: wrap;
 
-    div {
+    > div {
       flex: 1;
       background-color: var(--fg-gray);
       height: 400px;
       max-width: 100%;
       min-width: 250px;
       border-radius: 2rem;
-      padding: 1.5rem;
       transition: 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-size: 1.75rem;
+      color: var(--text-primary);
+      overflow: hidden;
+      padding: 1.5rem;
+      > * {
+        overflow: hidden;
+      }
+      @include mediumDevice {
+        font-size: 1.5rem;
+      }
+      @include smallerDevice {
+        font-size: 1.25rem;
+      }
+      .row-text {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        .icon-container {
+          flex-shrink: 0;
+          border-radius: 1rem;
+          background-color: var(--color-primary);
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .icon {
+            color: var(--text-dark);
+          }
+        }
+      }
+      .row-pills {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        font-size: 1rem;
+        gap: 0.5rem;
+        .pill {
+          width: max-content;
+          border-radius: 3rem;
+          font-size: 1.5rem;
+          padding: 0.5rem 1rem;
+          background-color: var(--color-primary);
+          color: var(--color-accent-dark);
+          @include mediumDevice {
+            font-size: 1.25rem;
+          }
+          @include smallerDevice {
+            font-size: 1rem;
+          }
+        }
+      }
+      .row-img {
+        object-fit: cover;
+        object-position: top;
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        transition: 0.2s ease;
+      }
+      .row-description-text {
+        font-size: 1rem;
+        color: var(--text-gray);
+      }
+      .row-CTA {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 3rem;
+        background-color: var(--color-primary);
+        color: var(--text-dark);
+        width: max-content;
+        font-size: 1.5rem;
+        transition: 0.1s ease;
+        &:hover {
+          background-color: var(--color-secondary);
+        }
+        @include smallerDevice {
+          font-size: 1.25rem;
+        }
+      }
       &:hover {
         background-color: var(--color-darkgray);
         border-radius: 3rem;
+        .row-img {
+          border-radius: 2rem;
+        }
       }
     }
   }

@@ -1,8 +1,7 @@
 import { AuthProvider } from "./Context/AuthContext";
 import { DataProvider } from "./Context/DataContext";
-import { useState, useEffect } from "react";
 import "./Globals.css";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Pages/Home/HomeLayout";
 import Auth from "./Pages/Auth/Auth";
 import Profile from "./Pages/Home/HomeOutlets/Profile/Profile";
@@ -10,7 +9,6 @@ import Analytics from "./Pages/Home/HomeOutlets/Analytics/Analytics";
 import Landing from "./Pages/Landing/Landing";
 import PrivateRoute from "./Components/PrivateRoute";
 import { ToastProvider } from "./Context/ToastContext";
-import LenisWrapper from "./LenisWrapper";
 import { UIProvider } from "./Context/UIContext";
 import Dashboard from "./Pages/Home/HomeOutlets/Dashboard/Dashboard";
 import Settings from "./Pages/Home/HomeOutlets/Settings/Settings";
@@ -19,7 +17,6 @@ import ScrollToTop from "./Components/ScrollToTop";
 
 function App() {
   return (
-    // <LenisWrapper>
     <AuthProvider>
       <UIProvider>
         <ToastProvider>
@@ -52,7 +49,6 @@ function App() {
         </ToastProvider>
       </UIProvider>
     </AuthProvider>
-    // </LenisWrapper>
   );
 }
 

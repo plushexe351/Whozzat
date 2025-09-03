@@ -15,6 +15,8 @@ import {
 } from "../../../../utils/linkHandlers";
 import WhozzatLogo from "../../../../assets/whozzat-logo.png";
 
+import placeholder from "../../../../assets/profile_placeholder.png";
+
 import { Link, Mail, Plus } from "react-feather";
 
 import "./Profile.scss";
@@ -134,12 +136,14 @@ const Profile = () => {
       <header>
         <div className="header-container">
           <div className="profile-cover-image">
-            <img src={displayUser?.coverURL || ""} alt="" className="img" />
+            {displayUser?.coverURL && (
+              <img src={displayUser?.coverURL} alt="" className="img" />
+            )}
           </div>
           <div className="header-content">
             <div className="user-profile">
               <LazyImage
-                src={displayUser?.profileURL}
+                src={displayUser?.profileURL || placeholder}
                 alt=""
                 className="profile-img"
               />

@@ -53,11 +53,12 @@ const Analytics = () => {
   const { user } = useAuth();
   const [timeRange, setTimeRange] = useState("week");
   const [heatmapData, setHeatmapData] = useState([]);
-  const [deviceStats, setDeviceStats] = useState({
-    mobile: Math.floor(Math.random() * 60) + 20,
-    desktop: Math.floor(Math.random() * 40) + 10,
-    tablet: Math.floor(Math.random() * 20) + 5,
-  });
+  // deviceStats will be derived from analytics.engagementCounts
+  const deviceStats = {
+    mobile: analytics.engagementCounts?.byDevice?.mobile || 0,
+    desktop: analytics.engagementCounts?.byDevice?.desktop || 0,
+    tablet: analytics.engagementCounts?.byDevice?.tablet || 0,
+  };
 
   // Get data based on time range
   const getTimeRangeData = () => {
@@ -86,14 +87,16 @@ const Analytics = () => {
 
   // Calculate click-through rate trends
   const clickTrends = useMemo(() => {
+    const byLink = analytics.engagementCounts?.byLink || {};
     return links
       .map((link) => ({
+        id: link.id,
         name: link.name || link.url,
-        rate: Math.floor(Math.random() * 100), // Simulated CTR
+        clicks: byLink[link.id] || 0,
       }))
-      .sort((a, b) => b.rate - a.rate)
+      .sort((a, b) => b.clicks - a.clicks)
       .slice(0, 5);
-  }, [links]);
+  }, [links, analytics.engagementCounts]);
 
   // Generate engagement score
   const getEngagementScore = () => {
@@ -467,7 +470,7 @@ const Analytics = () => {
                   </div>
                   <div className="stat-label">
                     <span>Mobile</span>
-                    <span>{deviceStats.mobile}%</span>
+                    <span>{deviceStats.mobile}</span>
                   </div>
                 </div>
                 <div className="device-stat">
@@ -479,7 +482,7 @@ const Analytics = () => {
                   </div>
                   <div className="stat-label">
                     <span>Desktop</span>
-                    <span>{deviceStats.desktop}%</span>
+                    <span>{deviceStats.desktop}</span>
                   </div>
                 </div>
                 <div className="device-stat">
@@ -491,7 +494,7 @@ const Analytics = () => {
                   </div>
                   <div className="stat-label">
                     <span>Tablet</span>
-                    <span>{deviceStats.tablet}%</span>
+                    <span>{deviceStats.tablet}</span>
                   </div>
                 </div>
               </div>
@@ -503,19 +506,100 @@ const Analytics = () => {
               </h3>
               <div className="ctr-list">
                 {clickTrends.map((link, index) => (
-                  <div key={index} className="ctr-item">
+                  <div key={link.id || index} className="ctr-item">
                     <div className="link-info">
                       <span className="link-name">{link.name}</span>
-                      <span className="ctr-rate">{link.rate}% CTR</span>
+                      <span className="ctr-rate">{link.clicks} clicks</span>
                     </div>
                     <div className="ctr-bar">
                       <div
                         className="bar-fill"
-                        style={{ width: `${link.rate}%` }}
+                        style={{ width: `${Math.min(link.clicks, 100)}%` }}
                       ></div>
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div className="metric-card">
+              <h3>
+                <Zap size={18} /> Link-wise Engagement
+              </h3>
+              <div className="links-engagement-list">
+                {(() => {
+                  const byLink = analytics.engagementCounts?.byLink || {};
+                  const topLinks = Object.keys(byLink)
+                    .map((id) => ({ id, clicks: byLink[id] }))
+                    .sort((a, b) => b.clicks - a.clicks)
+                    .slice(0, 6);
+
+                  return topLinks.map((l) => {
+                    const linkObj = links.find((ln) => ln.id === l.id) || {
+                      id: l.id,
+                      name: l.id,
+                    };
+                    const viewers = (analytics.engagements || [])
+                      .filter((e) => e.linkId === l.id)
+                      .reduce((acc, e) => {
+                        const key =
+                          e.viewerId || e.viewerName || `anon-${e.id}`;
+                        if (!acc[key])
+                          acc[key] = {
+                            viewerId: e.viewerId,
+                            viewerName: e.viewerName || "Anonymous",
+                            viewerProfileImage:
+                              e.viewerProfileImage || ProfilePlaceholder,
+                            count: 0,
+                          };
+                        acc[key].count++;
+                        return acc;
+                      }, {});
+
+                    const viewersArr = Object.values(viewers)
+                      .sort((a, b) => b.count - a.count)
+                      .slice(0, 6);
+
+                    return (
+                      <div className="link-view-item" key={l.id}>
+                        <div className="link-meta">
+                          <div className="link-title">{linkObj.name}</div>
+                          <a
+                            className="link-url"
+                            href={linkObj.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {linkObj.url}
+                          </a>
+                        </div>
+                        <div className="link-viewers">
+                          {viewersArr.map((v, idx) => (
+                            <a
+                              key={idx}
+                              href={`/u/${encodeURIComponent(
+                                v.viewerName || ""
+                              )}`}
+                              className="viewer-pill"
+                            >
+                              <LazyImage
+                                src={v.viewerProfileImage || ProfilePlaceholder}
+                                alt={v.viewerName}
+                                className="viewer-img"
+                              />
+                              <span className="viewer-name">
+                                {v.viewerName}
+                              </span>
+                              <span className="viewer-count">
+                                {v.count} clicks
+                              </span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
               </div>
             </div>
           </div>

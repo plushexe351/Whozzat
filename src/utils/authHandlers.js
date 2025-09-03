@@ -206,8 +206,9 @@ export const handleImageChange = (e, setProfileImage, setProfilePreview) => {
 export const handleSignOut = async (addToast) => {
   try {
     await signOut(auth);
+    setUser(null);
   } catch (error) {
-    // ignore
+    console.log("Failed to sign out", error);
   } finally {
     addToast("Logged out successfully !", "success");
   }

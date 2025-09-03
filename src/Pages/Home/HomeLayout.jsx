@@ -12,7 +12,7 @@ import {
   handleBookmarkLink,
 } from "../../utils/linkHandlers";
 import LinkItem from "../../Components/LinkItem/LinkItem";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 import "./HomeLayout.scss";
 import Sidebar from "../../Components/Sidebar/Sidebar";

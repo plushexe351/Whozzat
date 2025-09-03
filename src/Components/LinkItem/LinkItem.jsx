@@ -15,6 +15,7 @@ import placeholderImg from "../../assets/placeholder.png";
 import LazyImage from "../LazyImg";
 import "./LinkItem.scss";
 import { useToast } from "../../Context/ToastContext";
+import { logLinkClick } from "../../utils/linkHandlers";
 
 // Refer to Home.scss for styles
 
@@ -53,14 +54,29 @@ const LinkItem = ({
       initial={{ y: 0, scale: 0.9 }}
       animate={{ y: 0, scale: 1 }}
     >
-      <LazyImage
-        className="link-image"
-        src={link.imageUrl || placeholderImg}
-        alt={link.name}
-      />
+      <a
+        className="link-image-wrapper"
+        style={{ cursor: link.url ? "pointer" : "default" }}
+        href={link?.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={async (e) => {
+          try {
+            logLinkClick(link, user);
+          } catch (err) {
+            console.error("Error logging link", err);
+          }
+        }}
+      >
+        <LazyImage
+          className="link-image"
+          src={link.imageUrl || placeholderImg}
+          alt={link.name}
+        />
+      </a>
       <div className="link-details">
         <div className="link-name">
-          {link.name}
+          <a href={link?.url}>{link.name}</a>
           <div className="actions">
             {!viewOnly &&
               typeof link.visibility === "boolean" &&
@@ -79,9 +95,17 @@ const LinkItem = ({
                   }
                 >
                   {link.visibility ? (
-                    <Eye size={18} stroke="#e3dcff" />
+                    <Eye
+                      size={18}
+                      stroke="#e3dcff"
+                      className="link-visibility-toggle"
+                    />
                   ) : (
-                    <EyeOff size={18} stroke="#e3dcff" />
+                    <EyeOff
+                      size={18}
+                      stroke="#e3dcff"
+                      className="link-visibility-toggle"
+                    />
                   )}
                 </button>
               )}
@@ -157,7 +181,14 @@ const LinkItem = ({
           )}
         </div>
         {link.description && (
-          <div className="link-description">{link.description}</div>
+          <a
+            className="link-description"
+            href={link?.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {link.description}
+          </a>
         )}
       </div>
     </motion.div>

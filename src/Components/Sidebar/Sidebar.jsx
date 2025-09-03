@@ -16,7 +16,7 @@ const Sidebar = () => {
   const { addToast } = useToast();
   const { categories, setCategories, category, setCategory } = useData();
   const { showSidebar, setShowSidebar } = useUI();
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -42,11 +42,11 @@ const Sidebar = () => {
       path: "/home/analytics",
       icon: <ChartBar className="icon" size={17} />,
     },
-    {
-      title: "Settings",
-      path: "/home/settings",
-      icon: <Settings className="icon" size={17} />,
-    },
+    // {
+    //   title: "Settings",
+    //   path: "/home/settings",
+    //   icon: <Settings className="icon" size={17} />,
+    // },
   ];
 
   function normalizeQuery(q) {
@@ -267,7 +267,10 @@ const Sidebar = () => {
         <button className="share-profile" onClick={handleShareProfile}>
           <Share size={17} /> Share Profile
         </button>
-        <button className="logout" onClick={() => handleSignOut(addToast)}>
+        <button
+          className="logout"
+          onClick={() => handleSignOut(addToast, setUser)}
+        >
           <LogOut size={17} /> Log out
         </button>
       </div>

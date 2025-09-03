@@ -1,10 +1,11 @@
 import React from "react";
 import Menubar from "../../Components/Menubar/Menubar";
 import Profile from "../Home/HomeOutlets/Profile/Profile";
+import "./PublicProfile.scss";
 
 const PublicProfile = () => {
   return (
-    <div className="PublicProfilePage" style={{ background: "var(--fg-dark)" }}>
+    <div className="public-profile-page">
       <Menubar />
       <div
         className="public-profile-content"
