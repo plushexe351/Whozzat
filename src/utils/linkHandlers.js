@@ -132,6 +132,8 @@ export async function handleAddLink(data, user, setLinks) {
     description: data.description,
     imageUrl,
     pinned: false,
+    visibility: true,
+    ownerId: user.uid,
     createdAt: new Date().toISOString(),
     category: data.category || "",
   };
@@ -141,7 +143,6 @@ export async function handleAddLink(data, user, setLinks) {
   setLinks((prev) =>
     sortLinksByPinnedAndDate([...prev, { ...linkData, id: docRef.id }])
   );
-  console.log(data.category);
 }
 
 export async function handleEditLink(
@@ -165,6 +166,8 @@ export async function handleEditLink(
     description: data.description,
     imageUrl,
     pinned: data.pinned || false,
+    visibility: typeof data.visibility === "boolean" ? data.visibility : true,
+    ownerId: user.uid,
     updatedAt: new Date().toISOString(),
     category: data.category || "",
   };
@@ -241,4 +244,68 @@ export async function handleBookmarkLink(
     )
   );
   setActionMenuId && setActionMenuId(null);
+}
+
+export async function handleToggleVisibility(
+  link,
+  user,
+  setLinks,
+  setActionMenuId,
+  addToast
+) {
+  if (!user || !link.id) return;
+  const linkDoc = doc(db, "users", user.uid, "links", link.id);
+  const newVisibility = !link.visibility;
+  await setDoc(
+    linkDoc,
+    { visibility: newVisibility, updatedAt: new Date().toISOString() },
+    { merge: true }
+  );
+  setLinks((prev) =>
+    prev.map((l) =>
+      l.id === link.id ? { ...l, visibility: newVisibility } : l
+    )
+  );
+  setActionMenuId && setActionMenuId(null);
+}
+
+// Log a click/engagement for a given link. This will create or update an engagements subcollection
+// under the link document storing device, userId (if any), timestamp and increment a clicks counter.
+export async function logLinkClick(link, viewerUser) {
+  if (!link || !link.id) return;
+  try {
+    // engagement doc under users/{ownerId}/links/{linkId}/engagements/{id}
+    // ownerId should be attached on the link object when fetched; fall back to current viewer if missing
+    const ownerId = link.ownerId || (viewerUser && viewerUser.uid);
+    if (!ownerId) return;
+
+    const engagement = {
+      device: detectDeviceType(),
+      viewerId: viewerUser ? viewerUser.uid : null,
+      viewerName: viewerUser ? viewerUser.displayName || "" : "",
+      viewerProfileImage: viewerUser ? viewerUser.profileURL || "" : "",
+      timestamp: new Date().toISOString(),
+    };
+
+    // store a new engagement document
+    const engagementsCol = collection(
+      db,
+      "users",
+      ownerId,
+      "links",
+      link.id,
+      "engagements"
+    );
+    await addDoc(engagementsCol, engagement);
+  } catch (err) {
+    console.error("Failed to log link click", err);
+  }
+}
+
+function detectDeviceType() {
+  if (typeof navigator === "undefined") return "unknown";
+  const ua = navigator.userAgent || "";
+  if (/Mobi|Android/i.test(ua)) return "mobile";
+  if (/iPad|Tablet/i.test(ua)) return "tablet";
+  return "desktop";
 }

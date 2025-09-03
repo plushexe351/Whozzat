@@ -2,7 +2,7 @@
 
 .link-item {
   background-color: var(--color-background-primary);
-  padding-top: 1rem;
+  // padding-top: 1rem;
   border-radius: 0.6rem;
   // overflow: hidden;
   height: 275px;
@@ -10,13 +10,15 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  gap: 1rem;
+  // gap: 1rem;
   position: relative;
   transition: background-color 0.3s ease;
   @include mediumDevice {
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
     gap: 0.5rem;
+    flex-direction: row;
+    height: max-content;
   }
   &:hover {
     border-radius: 1rem;
@@ -24,10 +26,33 @@
       border-radius: 1rem;
     }
   }
+  .link-image-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    flex-shrink: 0;
+    @include mediumDevice {
+      width: unset;
+    }
+    @include smallerDevice {
+      padding: 0.5rem;
+    }
+  }
   .link-image {
+    flex-shrink: 0;
     height: 150px;
     width: 150px;
     border-radius: 50%;
+    @include mediumDevice {
+      height: 80px;
+      width: 80px;
+    }
+    @include smallerDevice {
+      height: 60px;
+      width: 60px;
+    }
   }
   .link-details {
     display: flex;
@@ -37,6 +62,12 @@
     gap: 0.3rem;
     width: 100%;
     overflow: auto;
+    @include mediumDevice {
+      border-top: none;
+    }
+    @include smallDevice {
+      padding-inline: 0.5rem;
+    }
   }
   .link-name {
     display: flex;
@@ -45,6 +76,15 @@
     font-weight: 500;
     font-size: 22px;
     color: var(--text-secondary);
+    @include mediumDevice {
+      font-size: 18px;
+    }
+    @include smallerDevice {
+      font-size: 1rem;
+    }
+    @include smallDevice {
+      font-size: 0.9rem;
+    }
   }
   .link-description {
     font-size: 14px;
@@ -53,10 +93,12 @@
       font-size: 0.9rem;
     }
     @include smallDevice {
-      display: none;
-      color: rgb(44, 44, 44);
-      font-weight: 500;
+      // display: none;
+      font-size: 0.8rem;
     }
+  }
+  .link-visibility-toggle {
+    cursor: pointer;
   }
   .actions {
     margin-left: auto;
@@ -64,13 +106,22 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    .pin {
-      stroke: violet;
-    }
-    .options-toggle {
-      position: absolute;
-      top: 3rem;
-      right: 2rem;
+  }
+  .options {
+    > * {
+      cursor: pointer;
+      &.options-toggle {
+        margin-left: 0.5rem;
+        width: 30px;
+        height: 30px;
+        padding: 0.3rem;
+        display: flex;
+        transition: 0.2s ease;
+        &:hover {
+          background-color: var(--fg-dark);
+          border-radius: 50%;
+        }
+      }
     }
   }
   .link-url {

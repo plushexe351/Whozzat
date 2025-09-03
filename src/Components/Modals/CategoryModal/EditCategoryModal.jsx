@@ -8,7 +8,7 @@ import { useAuth } from "../../../Context/AuthContext";
 import { useData } from "../../../Context/DataContext";
 import { useToast } from "../../../Context/ToastContext";
 import { motion } from "framer-motion";
-import { Trash } from "lucide-react";
+import { Trash, X, FolderOpen, Edit } from "lucide-react";
 
 const EditCategoryModal = ({ open, onClose, category, setCategory }) => {
   if (!open) return null;
@@ -47,31 +47,59 @@ const EditCategoryModal = ({ open, onClose, category, setCategory }) => {
 
   return (
     <motion.div
-      className="categoryModal"
+      className="category-modal-overlay"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
     >
-      <div className="modal-content">
-        <button className="close-btn" onClick={onClose}>
-          &times;
-        </button>
-        <h2>Edit Category</h2>
+      <div className="category-modal">
+        <div className="modal-header">
+          <h2>Edit Category</h2>
+          <button className="close-btn" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit} className="category-form">
-          <label htmlFor="category-name"></label>
-          <input
-            type="text"
-            name="category-name"
-            id="category-name"
-            value={newCategoryName}
-            onChange={(e) => setNewCategoryName(e.target.value)}
-          />
-          <div className="buttons">
-            <button type="submit" className="submit">
-              Rename
+          <div className="form-section">
+            <label className="form-label" htmlFor="category-name">
+              <FolderOpen size={16} />
+              Category Name
+            </label>
+            <input
+              type="text"
+              name="category-name"
+              id="category-name"
+              placeholder="Enter category name"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              className="form-input"
+              required
+              maxLength={30}
+            />
+            <small className="form-help">
+              {newCategoryName.length}/30 characters
+            </small>
+          </div>
+
+          <div className="form-actions">
+            <button
+              type="button"
+              onClick={onClose}
+              className="btn btn-secondary"
+            >
+              Cancel
             </button>
-            <button type="button" className="delete" onClick={handleDelete}>
-              <Trash size={20} stroke="red" />
+            <button type="submit" className="btn btn-primary">
+              <Edit size={16} />
+              Save Changes
+            </button>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="btn btn-danger"
+            >
+              <Trash size={16} />
             </button>
           </div>
         </form>

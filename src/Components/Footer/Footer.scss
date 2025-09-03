@@ -1,0 +1,29 @@
+@use "../../mixins.scss" as *;
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.3rem;
+  color: var(--text-gray);
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
+  @include smallerDevice {
+    font-size: 0.8rem;
+  }
+  .creator-name {
+    color: var(--color-primary);
+  }
+  .link-to-source {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 3rem;
+    background-color: var(--color-primary);
+    color: var(--text-dark);
+    padding: 0.5rem 1rem;
+  }
+}

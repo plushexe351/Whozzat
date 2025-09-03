@@ -12,8 +12,10 @@ import {
   handleDeleteLink,
   handlePinLink,
   handleBookmarkLink,
+  handleToggleVisibility,
 } from "../../../../utils/linkHandlers";
 import WhozzatLogo from "../../../../assets/whozzat-logo.png";
+import ProfilePlaceholder from "../../../../assets/profile_placeholder.png";
 
 import { Link, Mail, Plus } from "react-feather";
 
@@ -22,7 +24,7 @@ import "./LinksList.scss";
 import LazyImage from "../../../../Components/LazyImg";
 import AddCategoryModal from "../../../../Components/Modals/CategoryModal/AddCategoryModal";
 import { useToast } from "../../../../Context/ToastContext";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import EditCategoryModal from "../../../../Components/Modals/CategoryModal/EditCategoryModal";
 import {
   Edit,
@@ -38,6 +40,7 @@ import QuickAnalytics from "../../../../Components/QuickAnalytics/QuickAnalytics
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const { showSidebar, setShowSidebar } = useUI();
   const { links, setLinks, categories, category, setCategory } = useData();
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -87,7 +90,7 @@ const Dashboard = () => {
                 </span>
               </div>
               <LazyImage
-                src={user?.profileURL}
+                src={user?.profileURL || ProfilePlaceholder}
                 alt=""
                 className="profile-img"
               />
@@ -202,6 +205,7 @@ const Dashboard = () => {
               handleDeleteLink={handleDeleteLink}
               handlePinLink={handlePinLink}
               handleBookmarkLink={handleBookmarkLink}
+              handleToggleVisibility={handleToggleVisibility}
               user={user}
               setLinks={setLinks}
             />

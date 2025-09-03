@@ -1,7 +1,15 @@
 import React from "react";
 import "./LinkActionModal.scss";
 import { motion } from "framer-motion";
-// You can use an icon library or emoji for the bookmark
+import {
+  Edit,
+  Trash2,
+  Pin,
+  PinOff,
+  Bookmark,
+  BookmarkCheck,
+} from "lucide-react";
+
 const LinkActionModal = ({
   onEdit,
   onDelete,
@@ -18,38 +26,45 @@ const LinkActionModal = ({
       exit={{ opacity: 0, y: 10 }}
     >
       <button
+        className="action-btn edit-btn"
         onClick={() => {
           onEdit();
           close && close();
         }}
       >
+        <Edit size={16} />
         Edit
       </button>
       <button
+        className="action-btn delete-btn"
         onClick={() => {
           onDelete();
           close && close();
         }}
-        style={{ color: "red" }}
       >
+        <Trash2 size={16} />
         Delete
       </button>
       <button
+        className="action-btn pin-btn"
         onClick={() => {
           onPin();
           close && close();
         }}
       >
+        {link.pinned ? <PinOff size={16} /> : <Pin size={16} />}
         {link.pinned ? "Unpin" : "Pin"}
       </button>
       <button
+        className="action-btn bookmark-btn"
         onClick={() => {
           onBookmark();
           close && close();
         }}
         title={link.bookmarked ? "Remove Bookmark" : "Bookmark"}
       >
-        Bookmark
+        {link.bookmarked ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
+        {link.bookmarked ? "Remove Bookmark" : "Bookmark"}
       </button>
     </motion.div>
   );

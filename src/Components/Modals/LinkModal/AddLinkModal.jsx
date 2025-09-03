@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import "./LinkModal.scss";
-import { CloudUpload, Trash2 } from "lucide-react";
+import {
+  CloudUpload,
+  Trash2,
+  Link,
+  FileText,
+  Image,
+  FolderOpen,
+  X,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "../../../Context/ToastContext";
 
@@ -102,10 +110,13 @@ const AddLinkModal = ({
       exit={{ opacity: 0, y: 10 }}
     >
       <div className="add-link-modal">
-        <button className="close-btn" onClick={onClose}>
-          &times;
-        </button>
-        <h2>Add a Link</h2>
+        <div className="modal-header">
+          <h2>Add a Link</h2>
+          <button className="close-btn" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+
         <div className="presets">
           {PRESETS.map((preset) => (
             <button
@@ -126,80 +137,142 @@ const AddLinkModal = ({
         </div>
 
         <form onSubmit={handleSubmit} className="add-link-form">
-          <input
-            className="input input-url"
-            type="text"
-            placeholder="Link Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            className="input input-url"
-            type="url"
-            placeholder={selected.placeholder}
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            required
-          />
+          {/* Link Name Section */}
+          <div className="form-section">
+            <label className="form-label">
+              <Link size={16} />
+              Link Name
+            </label>
+            <input
+              className="form-input"
+              type="text"
+              placeholder="Enter link name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              maxLength={50}
+            />
+          </div>
 
-          <textarea
-            className="input input-description"
-            placeholder="Description (optional)"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={2}
-          />
-          {/* <label htmlFor="category" className="input">
-            Select Category
-          </label> */}
-          <select
-            className="input"
-            name="category"
-            id="category"
-            value={selected.category || ""}
-            onChange={(e) =>
-              setSelected({ ...selected, category: e.target.value })
-            }
-          >
-            <option value="">No Category</option>
-            {categories &&
-              categories.map((cat) => (
-                <option key={cat.id + "d1"} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
-          </select>
-          <label htmlFor="link-image" className="label-linkimage">
-            <CloudUpload size={18} />
-            Add Image
-          </label>
-          <input
-            name="link-image"
-            id="link-image"
-            className="input-image"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            hidden
-          />
-          {imagePreview && (
-            <>
-              <img src={imagePreview} alt="Preview" className="image-preview" />
-              <div
-                className="remove-image"
-                onClick={() => {
-                  setImagePreview(null);
-                  setImage(null);
-                }}
+          {/* URL Section */}
+          <div className="form-section">
+            <label className="form-label">
+              <Link size={16} />
+              URL
+            </label>
+            <input
+              className="form-input"
+              type="url"
+              placeholder={selected.placeholder}
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Description Section */}
+          <div className="form-section">
+            <label className="form-label">
+              <FileText size={16} />
+              Description (Optional)
+            </label>
+            <textarea
+              className="form-textarea"
+              placeholder="Enter link description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+              maxLength={200}
+            />
+            <small className="form-help">
+              {description.length}/200 characters
+            </small>
+          </div>
+
+          {/* Category Section */}
+          <div className="form-section">
+            <label className="form-label">
+              <FolderOpen size={16} />
+              Category
+            </label>
+            <select
+              className="form-select"
+              name="category"
+              id="category"
+              value={selected.category || ""}
+              onChange={(e) =>
+                setSelected({ ...selected, category: e.target.value })
+              }
+            >
+              <option value="">No Category</option>
+              {categories &&
+                categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {/* Image Section */}
+          <div className="form-section">
+            <label className="form-label">
+              <Image size={16} />
+              Link Image (Optional)
+            </label>
+            <div className="image-upload-section">
+              <button
+                type="button"
+                className="upload-btn"
+                onClick={() => document.getElementById("link-image").click()}
               >
-                <Trash2 size={17} stroke="#e3dcff" />
-              </div>
-            </>
-          )}
-          <button type="submit" className="add-link-submit">
-            Add Link
-          </button>
+                <CloudUpload size={18} />
+                Choose Image
+              </button>
+              <input
+                name="link-image"
+                id="link-image"
+                className="hidden-input"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                hidden
+              />
+              {imagePreview && (
+                <div className="image-preview-container">
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="image-preview"
+                  />
+                  <button
+                    type="button"
+                    className="remove-image-btn"
+                    onClick={() => {
+                      setImagePreview(null);
+                      setImage(null);
+                    }}
+                  >
+                    <Trash2 size={17} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="form-actions">
+            <button
+              type="button"
+              onClick={onClose}
+              className="btn btn-secondary"
+            >
+              Cancel
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Add Link
+            </button>
+          </div>
         </form>
       </div>
     </motion.div>

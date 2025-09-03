@@ -29,18 +29,32 @@ export const handleGoogleSignIn = async (
     const result = await signInWithPopup(auth, googleProvider);
     const { displayName, email, photoURL, uid } = result.user;
 
-    // Add user to Firestore if not already present
+    // Ensure Firestore user exists; fetch coverURL and bio
     const userDocRef = doc(db, "users", uid);
     const userDocSnap = await getDoc(userDocRef);
+    let firestoreData = {};
     if (!userDocSnap.exists()) {
       await setDoc(userDocRef, {
         email,
-        profileURL: photoURL,
-        username: displayName,
+        profileURL: photoURL || "",
+        username: displayName || "",
+        coverURL: "",
+        bio: "",
         createdAt: new Date().toISOString(),
       });
+      firestoreData = { coverURL: "", bio: "" };
+    } else {
+      firestoreData = userDocSnap.data() || {};
     }
-    setUser({ displayName, email, profileURL: photoURL, uid });
+
+    setUser({
+      displayName,
+      email,
+      profileURL: photoURL || firestoreData.profileURL || "",
+      uid,
+      bio: firestoreData.bio || "",
+      coverURL: firestoreData.coverURL || "",
+    });
     addToast(`Welcome, ${displayName}!`, "success");
     navigate("/home");
   } catch (err) {
@@ -68,16 +82,33 @@ export const handleEmailSignIn = async (
     setLoading(true);
     const result = await signInWithEmailAndPassword(auth, email, password);
     const { displayName, photoURL, uid, email: userEmail } = result.user;
-    // const userDocRef = doc(db, "users", uid);
-    // const userDocSnap = await getDoc(userDocRef);
-    // let displayName = "";
-    // let profileURL = "";
-    // if (userDocSnap.exists()) {
-    //   const data = userDocSnap.data();
-    //   displayName = data.username || "";
-    //   profileURL = data.profileURL || "";
-    // }
-    setUser({ displayName, email: userEmail, profileURL: photoURL, uid });
+
+    // Fetch Firestore user to include coverURL and bio
+    const userDocRef = doc(db, "users", uid);
+    const userDocSnap = await getDoc(userDocRef);
+    let firestoreData = {};
+    if (!userDocSnap.exists()) {
+      await setDoc(userDocRef, {
+        email: userEmail,
+        profileURL: photoURL || "",
+        username: displayName || "",
+        coverURL: "",
+        bio: "",
+        createdAt: new Date().toISOString(),
+      });
+      firestoreData = { coverURL: "", bio: "" };
+    } else {
+      firestoreData = userDocSnap.data() || {};
+    }
+
+    setUser({
+      displayName,
+      email: userEmail,
+      profileURL: photoURL || firestoreData.profileURL || "",
+      uid,
+      bio: firestoreData.bio || "",
+      coverURL: firestoreData.coverURL || "",
+    });
     addToast(`Welcome, ${displayName}!`, "success");
 
     navigate("/home");
@@ -114,7 +145,10 @@ export const handleSignUp = async (
 
     let photoURL = null;
     if (profileImage) {
-      const imageRef = ref(storage, `profileImages/${userCredential.user.uid}`);
+      const imageRef = ref(
+        storage,
+        `profile-images/${userCredential.user.uid}`
+      );
       await uploadBytes(imageRef, profileImage);
       photoURL = await getDownloadURL(imageRef);
     }
@@ -124,8 +158,10 @@ export const handleSignUp = async (
     });
     await setDoc(doc(db, "users", userCredential.user.uid), {
       email,
-      profileURL: photoURL,
+      profileURL: photoURL || "",
       username,
+      coverURL: "",
+      bio: "",
       createdAt: new Date().toISOString(),
     });
 
@@ -136,8 +172,10 @@ export const handleSignUp = async (
     setUser({
       displayName: refreshedUser.displayName || username,
       email: refreshedUser.email,
-      profileURL: refreshedUser.photoURL || photoURL,
+      profileURL: refreshedUser.photoURL || photoURL || "",
       uid: refreshedUser.uid,
+      bio: "",
+      coverURL: "",
     });
 
     addToast(
@@ -168,9 +206,10 @@ export const handleImageChange = (e, setProfileImage, setProfilePreview) => {
 export const handleSignOut = async (addToast) => {
   try {
     await signOut(auth);
-    addToast("Logged out successfully !", "success");
+    setUser(null);
   } catch (error) {
-    console.log("Sign out error:", error);
-    addToast("Error logging out", "error");
+    console.log("Failed to sign out", error);
+  } finally {
+    addToast("Logged out successfully !", "success");
   }
 };

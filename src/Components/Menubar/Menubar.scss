@@ -7,14 +7,18 @@
   align-items: center;
   width: 100%;
   padding: 0.5rem 2rem;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   gap: 0.5rem;
   transition: 0.1s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s;
   z-index: 1000;
   overflow: auto;
 
-  @include smallDevice {
+  @include smallerDevice {
     padding-inline: 1rem;
+  }
+
+  @include smallDevice {
+    justify-content: start;
   }
 
   .logo {
@@ -24,25 +28,24 @@
     align-items: center;
     font-size: 3rem;
     cursor: pointer;
-  }
-  .buttons.regularScreen {
-    @include mediumDevice {
-      display: none;
+    flex-shrink: none;
+    @include smallerDevice {
+      flex: unset;
+      img {
+        width: 40px;
+      }
     }
   }
 
-  .buttons.smallScreen {
-    display: none;
-    @include mediumDevice {
-      display: flex;
-    }
-  }
   .buttons {
     flex: 1;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 1rem;
+    @include smallerDevice {
+      gap: 0.5rem;
+    }
 
     > * {
       font-family: poppins, roboto, system-ui, -apple-system, BlinkMacSystemFont,
@@ -69,14 +72,22 @@
       &:hover {
         border-radius: 1rem;
       }
+      @include smallerDevice {
+        padding: 0.5rem 1rem;
+      }
     }
   }
 }
 .dashboard-link {
-  color: var(--text-primary);
-  border: 2px solid var(--text-primary);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
   border-radius: 1rem !important;
   padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  @include smallerDevice {
+    padding: 0.5rem 1rem;
+  }
 }
 
 .fixed-menubar {
@@ -94,15 +105,11 @@
   margin-inline: auto;
   padding: 0.5rem;
 
-  @include mediumDevice {
-    max-width: 100%;
-  }
   .logo {
     display: none;
   }
-  .buttons,
-  .dashboard-link {
-    display: none;
+  @include mediumDevice {
+    max-width: 100%;
   }
 }
 
@@ -128,7 +135,7 @@
   z-index: 100;
   position: relative;
 
-  @include mediumDevice {
+  @include smallerDevice {
     display: none;
     justify-content: start;
     overflow: auto;
@@ -177,8 +184,10 @@
   align-items: center;
   gap: 1rem;
   color: var(--color-primary);
-  @include smallDevice {
-    gap: 0.5rem;
+  & {
+    @include smallerDevice {
+      gap: 0.5rem;
+    }
   }
   .user-profile-image {
     height: 45px;
