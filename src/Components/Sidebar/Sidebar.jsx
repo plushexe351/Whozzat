@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./Sidebar.scss";
 import logo from "../../assets/whozzat-logo.png";
 import { Home, Link, LogOut, Settings, Share, Search } from "react-feather";

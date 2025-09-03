@@ -22,7 +22,7 @@ import "./Profile.scss";
 import LazyImage from "../../../../Components/LazyImg";
 import AddCategoryModal from "../../../../Components/Modals/CategoryModal/AddCategoryModal";
 import { useToast } from "../../../../Context/ToastContext";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import EditCategoryModal from "../../../../Components/Modals/CategoryModal/EditCategoryModal";
 import {
   Edit,

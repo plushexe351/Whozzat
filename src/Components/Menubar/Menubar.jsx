@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Menubar.scss";
-import { Link, NavLink, useLocation, useNavigate } from "react-router";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import { handleSignOut } from "../../utils/authHandlers.js";
 import { useToast } from "../../Context/ToastContext.jsx";

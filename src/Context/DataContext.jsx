@@ -8,7 +8,7 @@ import React, {
 import { db, collection, getDocs } from "../firebase";
 import { useAuth } from "./AuthContext";
 import { sortLinksByPinnedAndDate } from "../utils/linkHandlers";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const DataContext = createContext();
 
@@ -123,7 +123,7 @@ export const DataProvider = ({ children }) => {
         setCategories,
         category,
         setCategory,
-        analytics, // <--- now available everywhere
+        analytics,
       }}
     >
       {children}

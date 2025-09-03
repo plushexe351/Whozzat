@@ -24,7 +24,7 @@ import "./LinksList.scss";
 import LazyImage from "../../../../Components/LazyImg";
 import AddCategoryModal from "../../../../Components/Modals/CategoryModal/AddCategoryModal";
 import { useToast } from "../../../../Context/ToastContext";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import EditCategoryModal from "../../../../Components/Modals/CategoryModal/EditCategoryModal";
 import {
   Edit,
