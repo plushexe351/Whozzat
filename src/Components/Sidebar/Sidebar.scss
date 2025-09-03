@@ -18,8 +18,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 90%;
-    height: 90%;
+    width: 80%;
+    height: calc(100% - 2rem);
     background-color: var(--bg-dark);
     z-index: 1000;
     transform: translateX(-100%);
