@@ -4,13 +4,13 @@ An app for all your links in one place, with a material you inspired design buil
 
 ## 📋 Feature TODO List 
 
-- [ ] Landing Page — WIP
+- [x] Landing Page 
 - [x] Authentication — Complete (basic login/register done, improvements pending)
 - [x] Social Login (Google) 
 - [ ] Profile Customization Page — To Do (add bio, profile pic, background, etc.)
 - [x] Add / Remove Links UI — To Do (user can manage their personal links)
-- [ ] Link Analytics Dashboard — To Do (clicks, impressions, device info, etc.)
-- [ ] Public Profile Page — To Do (live profile with custom URL)
+- [x] Link Analytics Dashboard — To Do (clicks, impressions, device info, etc.)
+- [x] Public Profile Page — To Do (live profile with custom URL)
 - [ ] Themes / Appearance Options — To Do (colors, fonts, button shapes)
 - [ ] Admin Dashboard — To Do (user management, reported content review)
 - [ ] Responsive Design Pass — To Do (ensure mobile + tablet compatibility)
