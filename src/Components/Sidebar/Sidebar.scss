@@ -3,7 +3,7 @@
 .Sidebar {
   border-right: 1px solid var(--color-darkgray);
   width: 260px;
-  min-height: 100vh;
+  height: 100vh;
   max-height: 100vh;
   padding-inline: 0.75rem;
   padding-bottom: 0.75rem;
@@ -19,7 +19,7 @@
     top: 0;
     left: 0;
     width: 70%;
-    height: 100%;
+    height: 90%;
     background-color: var(--bg-dark);
     z-index: 1000;
     transform: translateX(-100%);
