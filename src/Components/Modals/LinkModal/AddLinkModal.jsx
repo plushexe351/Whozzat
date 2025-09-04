@@ -11,36 +11,42 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "../../../Context/ToastContext";
+import Github from "../../../assets/github.png";
+import Linkedin from "../../../assets/linkedin.png";
+import Instagram from "../../../assets/instagram.png";
+import Twitter from "../../../assets/twitter.png";
+import Youtube from "../../../assets/youtube.png";
+import Weblink from "../../../assets/weblink.png";
 
 const PRESETS = [
   {
     name: "GitHub",
-    icon: "/src/assets/github.png",
+    icon: Github,
     placeholder: "https://github.com/username",
   },
   {
     name: "LinkedIn",
-    icon: "/src/assets/linkedin.png",
+    icon: Linkedin,
     placeholder: "https://linkedin.com/in/username",
   },
   {
     name: "Instagram",
-    icon: "/src/assets/instagram.png",
+    icon: Instagram,
     placeholder: "https://instagram.com/username",
   },
   {
     name: "Twitter",
-    icon: "/src/assets/twitter.png",
+    icon: Twitter,
     placeholder: "https://twitter.com/username",
   },
   {
     name: "YouTube",
-    icon: "/src/assets/youtube.png",
+    icon: Youtube,
     placeholder: "https://youtube.com/@username",
   },
   {
     name: "Custom",
-    icon: "/src/assets/weblink.png",
+    icon: Weblink,
     placeholder: "https://yourwebsite.com",
   },
 ];
