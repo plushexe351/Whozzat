@@ -1,14 +1,7 @@
 @use "../../../../mixins.scss" as *;
 
 .Analytics {
-  // max-width: var(--max-width);
   margin: 0 auto;
-  // padding: 2rem;
-
-  @include smallDevice {
-    padding: 1rem;
-  }
-
   h2 {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--color-border);
